@@ -9,87 +9,93 @@
 	<script src="assets/js/global.min.js"></script>
 	<script src="assets/js/codemirror.js"></script>
 	<script src="assets/js/color.js"></script>
-	<script src="assets/js/sweetalert.js"></script>
+	<script src="assets/js/sweetalert2.js"></script>
 	
+	<style>
+		.partikel {
+			position: fixed;
+			width: 100px;
+			height: 100px;
+			background: red;
+			clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+			animation: ledak 2s ease-out forwards;
+			z-index: 9999;
+			pointer-events: none;
+		}
+
+		@keyframes ledak {
+			0% {
+				opacity: 1;
+				transform: translate(0px, 0px) scale(1);
+			}
+			100% {
+				opacity: 0;
+				transform: translate(var(--dx), var(--dy)) scale(0.2) rotate(720deg);
+			}
+		}
+	</style>
+
 	<script type="text/javascript">
+		function efekLedak(x, y) {
+			const jumlah = 100;
+			const audio = new Audio("assets/music/ledakan_2.mp3");
+			audio.play().catch(() => {});
+
+			for (let i = 0; i < jumlah; i++) {
+				const p = document.createElement("div");
+				p.classList.add("partikel");
+				p.style.left = x + "px";
+				p.style.top = y + "px";
+
+				const dx = (Math.random() - 0.5) * 2000 + "px";
+				const dy = (Math.random() - 0.5) * 2000 + "px";
+				p.style.setProperty("--dx", dx);
+				p.style.setProperty("--dy", dy);
+				p.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+
+				document.body.appendChild(p);
+				setTimeout(() => p.remove(), 1000);
+			}
+		}
+
 		$(function(){
 			$('#editor_page').hide();
 			$('#preview_page').hide();
 			$('#music_page').hide();
 			$('#page_koding_selesai').hide();
-		
-			swal({
+
+			Swal.fire({
 				title: "Welcome",
-				icon: "success",
-				closeOnClickOutside: false,
-				buttons: {
-					catch: "Open",
-				},
-			}).then((klik) => {
-				switch (klik) {
-					case "catch":
-						terbuka();
-						//second_load_true();
-					break;
+				allowOutsideClick: false,
+				confirmButtonText: "Open",
+				backdrop: `
+					rgba(0,0,123,0.4)
+					url("assets/img/nyan-cat.gif")
+					left top
+					no-repeat
+				`
+			}).then((result) => {
+				if (result.isConfirmed) {
+					const rect = document.querySelector('.swal2-popup').getBoundingClientRect();
+					efekLedak(rect.left + rect.width/2, rect.top + rect.height/2);
+					terbuka();
 				}
 			});
 		});
 
-		function second_load_true() {
-			$('.second_load_page').modal('show');
-		}
-
-		function coba_buka(){
-			//const kunci = 'agiarlan';
-			//const abisin = $('#password').val();
-			//
-			//if(abisin !== ''){
-			//	if (abisin === kunci) {
-					//location.href = 'contoh.html';
-					terbuka();
-					$('.second_load_page').modal('hide');
-			//	}else{
-			//		swal({
-			//			title: "WARNING!",
-			//			text: "Wrong Password 😪",
-			//			icon: "warning",
-			//		});
-			//	}
-			//}else{
-			//	swal({
-			//		title: "WARNING!",
-			//		text: "Password can't be empty 😪",
-			//		icon: "warning",
-			//	});
-			//}
-		}
-
 		function terbuka(){
 			mulai_ketik();
-			
 			$('#editor_page').show();
 			$('#preview_page').show();
 			$('#music_page').hide();
 			$('#page_koding_selesai').hide();
-			
-			//var musik = document.getElementById('mulai_music');
-			//
-			//if(musik){
-			//	musik.play();
-			//}else{
-			//	musik.pause();
-			//}
-			
 		}
-		
+
 		function mulai_ketik() {
 			var x = 0;
 			var text = $('#page_koding_selesai_isi').val();
 			var speed = 50;
-			var element = document.getElementById("editor-play");
-			
 			run.setValue('');
-		
 			var stop = setInterval(() => {
 				if (x < text.length) {
 					run.replaceRange(text.charAt(x), run.posFromIndex(run.getValue().length));
@@ -100,9 +106,7 @@
 			}, speed);
 		}
 
-		const qs = function(el){
-			return document.querySelector(el);
-		};
+		const qs = el => document.querySelector(el);
 
 		function updateRun(html){
 			const iframe = document.getElementById('preview-play');
@@ -124,49 +128,21 @@
 					mode: 'text/html',
 					theme: 'monokai',
 				});
-		
 				run.on('change', function(){
 					updateRun(run.getValue());
 				});
-		
 				updateRun(run.getValue());
 			}
 		});
-
 	</script>
 </head>
-
 <body>
 	<br>
 	<div class="container-fluid">
-	
-		<div class="modal fade second_load_page" data-bs-backdrop="static">
-			<div class="modal-dialog modal-dialog-centered">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">Noification</h5>
-					</div>
-					<div class="modal-body">
-						<div class="mb-3 row">
-							<label class="col-sm-5 col-form-label">Input Password</label>
-							<div class="col-sm-7">
-								<input type="password" name="password" id="password" class="form-control form-control-sm" style="border: 1px solid gray;">
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" onclick="coba_buka();">Open</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	
 		<div class="row">
 			<div class="col-lg-7" id="editor_page">
-				<div class="card responsive" style="box-shadow: 10px 10px 20px lavender;">
-					<div class="card-header">
-						<label> Automatic Script </label>
-					</div>
+				<div class="card" style="box-shadow: 10px 10px 20px lavender;">
+					<div class="card-header"></div>
 					<div class="card-body">
 						<textarea id="editor-play" style="height: 480px;"></textarea>
 					</div>
@@ -180,7 +156,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="col-sm-12" id="music_page">
 			<div class="card">
 				<audio controls id="mulai_music">
@@ -188,7 +164,7 @@
 				</audio>
 			</div>
 		</div>
-		
+
 		<div class="col-sm-12" id="page_koding_selesai">
 			<div class="card">
 				<div class="card-body">
@@ -204,24 +180,24 @@
 			margin: 0.3cm;
 			border: 1px solid #D3D3D3;
 			border-radius: 5px;
-			background-size: cover; /* isi penuh area */
+			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: center;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 			image-rendering: auto;
 		}
-		
 		#prevsecond{
 			width: 440px;
 			height: 519px;
 			margin: 0.3cm;
 			border: 1px solid #D3D3D3;
 			border-radius: 5px;
-			background-size: cover; /* isi penuh area */
+			background-size: cover;
 			background-repeat: no-repeat;
 			background-position: center;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 			image-rendering: auto;
+		}
 	</style>
 </head>
 <body>
@@ -235,8 +211,6 @@
 				</div>
 			</div>
 		</div>
-		
-    </div>
-	
-	</body>
+	</div>
+</body>
 </html>
