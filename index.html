@@ -18,9 +18,9 @@
 			$('#music_page').hide();
 			$('#page_koding_selesai').hide();
 		
-			swal("Who create this web?", {
-				title: "Warning",
-				icon: "info",
+			swal({
+				title: "Welcome",
+				icon: "success",
 				closeOnClickOutside: false,
 				buttons: {
 					catch: "Open",
@@ -28,7 +28,8 @@
 			}).then((klik) => {
 				switch (klik) {
 					case "catch":
-						second_load_true();
+						terbuka();
+						//second_load_true();
 					break;
 				}
 			});
@@ -39,27 +40,28 @@
 		}
 
 		function coba_buka(){
-			const kunci = 'agiarlan';
-			const abisin = $('#password').val();
-		
-			if(abisin !== ''){
-				if (abisin === kunci) {
+			//const kunci = 'agiarlan';
+			//const abisin = $('#password').val();
+			//
+			//if(abisin !== ''){
+			//	if (abisin === kunci) {
+					//location.href = 'contoh.html';
 					terbuka();
 					$('.second_load_page').modal('hide');
-				}else{
-					swal({
-						title: "WARNING!",
-						text: "Wrong Password 😪",
-						icon: "warning",
-					});
-				}
-			}else{
-				swal({
-					title: "WARNING!",
-					text: "Password can't be empty 😪",
-					icon: "warning",
-				});
-			}
+			//	}else{
+			//		swal({
+			//			title: "WARNING!",
+			//			text: "Wrong Password 😪",
+			//			icon: "warning",
+			//		});
+			//	}
+			//}else{
+			//	swal({
+			//		title: "WARNING!",
+			//		text: "Password can't be empty 😪",
+			//		icon: "warning",
+			//	});
+			//}
 		}
 
 		function terbuka(){
@@ -70,13 +72,13 @@
 			$('#music_page').hide();
 			$('#page_koding_selesai').hide();
 			
-			var musik = document.getElementById('mulai_music');
-			
-			if(musik){
-				musik.play();
-			}else{
-				musik.pause();
-			}
+			//var musik = document.getElementById('mulai_music');
+			//
+			//if(musik){
+			//	musik.play();
+			//}else{
+			//	musik.pause();
+			//}
 			
 		}
 		
@@ -189,9 +191,6 @@
 		
 		<div class="col-sm-12" id="page_koding_selesai">
 			<div class="card">
-				<div class="card-header">
-					<button type="button" class="btn btn-danger" onclick="kembali()"><i class="fas fa-sync"></i> Kembali</button><h4>#Script Hari Kelima</h4>
-				</div>
 				<div class="card-body">
 					<textarea type="text" class="form-control" id="page_koding_selesai_isi" readonly>
 <!DOCTYPE html>
@@ -199,79 +198,37 @@
 <head>
     <link href="assets/css/all.css" rel="stylesheet">
 	<style type="text/css">
-		#batas{
-			width: 11.8cm;
-			min-height: 13.8cm;
+		#prevfirst{
+			width: 440px;
+			height: 519px;
 			margin: 0.3cm;
-			border: 1px #D3D3D3 solid;
+			border: 1px solid #D3D3D3;
 			border-radius: 5px;
-			background-image: url('assets/img/background.png');
+			background-size: cover; /* isi penuh area */
+			background-repeat: no-repeat;
+			background-position: center;
 			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-			letter-spacing: 0.5px;
+			image-rendering: auto;
 		}
 		
-		#atas{
-			width: 100%;
-			margin: 0.6cm;
-		}
-		
-		#tengah{
-			width: 100%;
-			margin: 0.6cm;
-		}
+		#prevsecond{
+			width: 440px;
+			height: 519px;
+			margin: 0.3cm;
+			border: 1px solid #D3D3D3;
+			border-radius: 5px;
+			background-size: cover; /* isi penuh area */
+			background-repeat: no-repeat;
+			background-position: center;
+			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+			image-rendering: auto;
 	</style>
 </head>
 <body>
-	<div id="batas">
-		<table id="atas">
-			<tr>
-				<td width="25%" align="center">
-					<img src="assets/img/foto.jpg" style="width: 70px; height: 70px; border-radius: 50%;">
-				</td>
-				<td width="50%" align="center">
-					<span style="font-size: 25px; font-weight: bold;"> AGI ARLAN </span>
-					<p style="font-weight: bold; font-size: 10px; letter-spacing: 8px;">OFFICE BOY</p>
-				</td>
-				<td width="25%">
-				</td>
-			</tr>
-		</table>
-		
-		<table id="tengah">
-			<tr>
-				<td width="50%">
-					<table width="100%">
-						<tr>
-							<td>
-								<span style="font-weight: bold;">ABOUT</span>
-								<p style="font-size: 9px;">Saya adalah saya bukan kamu, mereka ataupun dia. Jadi kalau ingin berteman mari berteman.</p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span style="font-weight: bold;">EDUCATION</span>
-								<ul>
-									<li style="font-size: 9px;">SDN Pasarkemis 1</li>
-									<li style="font-size: 9px;">SMPN 1 Pasarkemis</li>
-									<li style="font-size: 9px;">SMKN 2 Kabupaten Tangerang</li>
-								</ul>
-								<p></p>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<span style="font-weight: bold;">ADDRESS</span>
-								<p><img src="assets/img/qr_alamat.png" style="width: 50px;"></p>
-							</td>
-						</tr>
-					</table>
-				</td>
-				<td width="50%">
-					
-				</td>
-			</tr>
-		</table>
-	</div>
+	<div id="prevfirst"><img src="assets/img/ps.png" width="439px" height="518px"></div>
+	<br>
+	<div id="prevsecond"><img src="assets/img/pd.png" width="439px" height="518px"></div>
+	<br>
 </body>
 </html>
 					</textarea>
