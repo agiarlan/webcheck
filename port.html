@@ -1,39 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
-    <link href="assets/css/all.css" rel="stylesheet">
-	<style type="text/css">
-		#prevfirst{
-			width: 11.8cm;
-			height: 13.8cm;
-			margin: 0.3cm;
-			border: 1px solid #D3D3D3;
-			border-radius: 5px;
-			background-size: cover; /* isi penuh area */
-			background-repeat: no-repeat;
-			background-position: center;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-			letter-spacing: 0.5px;
-		}
-		
-		#prevsecond{
-			width: 11.8cm;
-			height: 13.8cm;
-			margin: 0.3cm;
-			border: 1px solid #D3D3D3;
-			border-radius: 5px;
-			background-size: cover; /* isi penuh area */
-			background-repeat: no-repeat;
-			background-position: center;
-			box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-			letter-spacing: 0.5px;
-			background-image: url('assets/img/keduaa.png');
-		}
-	</style>
+  <script src="https://cdn.jsdelivr.net/npm/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+  <style>
+    .fade-slider {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      height: 400px;
+      margin: auto;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(0.80);
+      transition: opacity 2s ease, transform 2s ease;
+    }
+
+    .slide.active {
+      opacity: 2;
+      transform: scale(1);
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-	<div id="prevfirst"><img src="assets/img/pertama.png" width="440px" height="519px"></div>
-	<br>
-	<div id="prevsecond"></div>
+
+<div class="fade-slider">
+  <img src="https://fastly.picsum.photos/id/981/800/400.jpg?hmac=U4gWPC17Vg9s6qc8uMIzUMnvRI1JfsP8s7fWhRtPNUo" class="slide active">
+  <img src="https://fastly.picsum.photos/id/735/800/400.jpg?hmac=PGJOJZ72iSnDeqp6ubDBQlZnu1IMilRZDRc8SMVQZD0" class="slide">
+  <img src="https://fastly.picsum.photos/id/10/800/400.jpg?hmac=mG3MliNMPnHRnJn4EeAujR11TmmYR7IUkOSJmE1UML4" class="slide">
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    let current = 0;
+    const slides = document.querySelectorAll('.fade-slider .slide');
+    const total = slides.length;
+
+    function showNextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % total;
+      slides[current].classList.add('active');
+    }
+
+    setInterval(showNextSlide, 4000);
+  });
+</script>
+
 </body>
 </html>
